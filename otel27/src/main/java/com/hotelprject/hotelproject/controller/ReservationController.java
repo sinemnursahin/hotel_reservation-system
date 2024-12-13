@@ -16,8 +16,8 @@ import java.time.temporal.ChronoUnit;
 @Controller
 @RequiredArgsConstructor
 public class ReservationController {
-    private final RoomService roomService;
-    private final ReservationService reservationService;
+    private  RoomService roomService;
+    private  ReservationService reservationService;
     @GetMapping("/reserve")
     public String showReservationPage(@RequestParam("roomId") Long roomId, Model model) {
         // Oda bilgisini RoomService üzerinden alıyoruz.
