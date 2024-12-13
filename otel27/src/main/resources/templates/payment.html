@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ödeme Ekranı</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/payment.css}" />
+</head>
+<body>
+
+<h1>Ödeme Ekranı</h1>
+
+<div class="payment-container">
+    <h2>Rezervasyon Detayları</h2>
+    <p><strong>Oda Adı:</strong> <span th:text="${room.name}"></span></p>
+    <p><strong>Başlangıç Tarihi:</strong> <span th:text="${reservationDate}"></span></p>
+    <p><strong>Bitiş Tarihi:</strong> <span th:text="${endDate}"></span></p>
+    <p><strong>Kişi Sayısı:</strong> <span th:text="${room.size}"></span>
+    <p><strong>Toplam Tutar:</strong> <span th:text="${totalPrice}"></span> TL</p>
+
+    <h2>Ödeme Bilgileri</h2>
+    <form th:action="@{/reserve/process-payment}" method="post">
+        <input type="hidden" name="roomId" th:value="${room.id}" />
+        <label for="cardHolderName">Kart Sahibi Adı:</label>
+        <input type="text" name="cardHolderName" id="cardHolderName" placeholder="Kart Sahibi Adı"
+               th:value="${name != null ? name : ''}" required />
+        <label for="cardNumber">Kart Numarası:</label>
+        <input type="text" name="cardNumber" id="cardNumber" placeholder="1234123412341234"
+                required />
+
+        <label for="expiryDate">Son Kullanma Tarihi:</label>
+        <input type="month" name="expiryDate" id="expiryDate" required />
+
+        <label for="cvv">CVV:</label>
+        <input type="password" name="cvv" id="cvv" placeholder="XXX" pattern="\d{3}" required />
+
+        <input type="hidden" name="reservationDate" th:value="${reservationDate}" />
+        <input type="hidden" name="endDate" th:value="${endDate}" />
+
+
+        <button type="submit">Ödemeyi Tamamla</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renkli Rüyalar Oteli</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+</head>
+<body>
+<!-- Navbar -->
+<nav>
+    <div class="navbar-container">
+        <a href="/home" class="logo">Renkli Rüyalar</a>
+        <div class="nav-links">
+            <a href="/rooms">Odaları Görüntüle</a>
+            <a href="/cancel-reservation" class="cancel-button">Rezervasyonu İptal Et</a>
+        </div>
+        <div class="user-actions">
+            <span th:if="${session.loggedInUser != null}">
+                Hoşgeldin, <b th:text="${session.loggedInUser}"></b>!
+                <a th:href="@{/logout}" class="logout-button">Çıkış Yap</a>
+            </span>
+            <span th:if="${session.loggedInUser == null}">
+                <a th:href="@{/login}" class="auth-button">Login</a>
+                <a th:href="@{/register}" class="auth-button">Kayıt Ol</a>
+            </span>
+        </div>
+    </div>
+</nav>
+
+<section class="welcome-section" th:style="'background-image: url(' + @{/homeimages/otel.jpg} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+    <h1>Renkli Rüyalar Oteli'ne Hoşgeldiniz</h1>
+    <p>Konforun ve lüksün buluşma noktası.</p>
+    <a href="/rooms" class="cta-button">Odaları Keşfet</a>
+</section>
+
+
+<!-- Otel Resimleri Galerisi -->
+<section id="hotel-gallery">
+    <h2>Otelimizin Görselleri</h2>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img th:src="@{'/homeimages/resim1.webp'}" alt="Otel Resmi 1" class="room-image">
+        </div>
+        <div class="gallery-item">
+            <img th:src="@{'/homeimages/resim2.jpg'}" alt="Otel Resmi 2" class="room-image">
+        </div>
+        <div class="gallery-item">
+            <img th:src="@{'/homeimages/resim3.jpg'}" alt="Otel Resmi 3" class="room-image">
+        </div>
+        <div class="gallery-item">
+            <img th:src="@{'/homeimages/resim4.jpg'}" alt="Otel Resmi 4" class="room-image">
+        </div>
+    </div>
+</section>
+
+<!-- Otel Hakkında Bölümü -->
+<section id="hotel-info">
+    <h2>Otelimiz Hakkında</h2>
+    <p>Renkli Rüyalar Oteli, misafirlerine lüks bir deneyim sunmak amacıyla inşa edilmiştir. Otelimiz, modern olanaklarla donatılmış, huzurlu bir ortamda konaklama imkanı sunuyor.</p>
+    <ul>
+        <li>Ücretsiz Wi-Fi</li>
+        <li>Spa ve Sağlık Merkezi</li>
+        <li>Restoran ve Kafeler</li>
+        <li>Yüzme Havuzu</li>
+        <li>24 Saat Resepsiyon</li>
+    </ul>
+</section>
+
+<!-- Yorumlar Bölümü -->
+<section id="comments-section">
+    <h2>Yorumlar</h2>
+    <div class="comment-form">
+        <input type="text" placeholder="Adınız" id="nameInput" />
+        <textarea placeholder="Yorumunuz" id="commentInput"></textarea>
+        <button onclick="submitComment()">Yorum Yap</button>
+    </div>
+    <div class="comments-list" id="comments-list">
+        <!-- Yorumlar burada gösterilecek -->
+    </div>
+</section>
+
+<!-- İletişim Bilgileri -->
+<section id="contact-info">
+    <h2>İletişim Bilgileri</h2>
+    <ul>
+        <li>Email: info@renklioteli.com</li>
+        <li>Telefon: +90 555 123 45 67</li>
+        <li>Adres: Beylikdüzü, İstanbul, Türkiye</li>
+    </ul>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>© 2024 Renkli Rüyalar Oteli - Tüm hakları saklıdır.</p>
+</footer>
+
+<script>
+    function submitComment() {
+        const commentsList = document.getElementById('comments-list');
+        const nameInput = document.getElementById('nameInput').value;
+        const commentInput = document.getElementById('commentInput').value;
+
+        if (nameInput && commentInput) {
+            const newComment = document.createElement('div');
+            newComment.classList.add('comment-item');
+            newComment.innerHTML = `<p><strong>${nameInput}</strong>: ${commentInput}</p>`;
+            commentsList.appendChild(newComment);
+            document.getElementById('nameInput').value = '';
+            document.getElementById('commentInput').value = '';
+        } else {
+            alert('Lütfen adınızı ve yorumunuzu girin.');
+        }
+    }
+</script>
+</body>
+</html>
+

@@ -1,0 +1,175 @@
+/* Genel Ayarlar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #e5d4f9 0%, #c4aef5 100%);
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #4b0082;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 2.5rem;
+    animation: fadeInDown 1s ease;
+}
+
+.payment-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Beyaz ama hafif saydam */
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 1s ease;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #d1c4e9;
+    padding-bottom: 10px;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+strong {
+    font-weight: bold;
+    color: #4b0082;
+}
+
+span {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+label {
+    font-size: 1rem;
+    color: #4b0082;
+}
+
+input[type="text"],
+input[type="month"],
+input[type="password"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="month"]:focus,
+input[type="password"]:focus {
+    border-color: #845ec2;
+    box-shadow: 0 4px 10px rgba(132, 94, 194, 0.2);
+}
+
+button[type="submit"] {
+    background: linear-gradient(135deg, #a06cd5 0%, #845ec2 100%);
+    color: #fff;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(132, 94, 194, 0.3);
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(132, 94, 194, 0.5);
+    background: linear-gradient(135deg, #845ec2 0%, #a06cd5 100%);
+}
+
+/* Animasyonlar */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 15px;
+        margin: 20px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    input[type="month"],
+    input[type="password"] {
+        font-size: 0.95rem;
+    }
+
+    button[type="submit"] {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .payment-container {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1

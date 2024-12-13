@@ -1,0 +1,124 @@
+/* Genel Ayarlar */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #e3eafc, #f7f7fc);
+    color: #333;
+}
+
+/* Login Sayfası Konteyneri */
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 50px auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Başlık */
+h2 {
+    text-align: center;
+    color: #6a11cb;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Form Alanı */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input Alanları */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-weight: bold;
+    color: #6a11cb;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.input-group input:focus {
+    border-color: #6a11cb;
+}
+
+/* Hata Mesajı */
+.error-message {
+    background-color: rgba(253, 204, 204, 0.8);
+    color: #c74b75;
+    border: 1px solid #f7d1d5;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Animasyonlar */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Giriş Butonu */
+button {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    transform: translateY(-3px);
+}
+
+/* Responsive Tasarım */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    .input-group input {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+}

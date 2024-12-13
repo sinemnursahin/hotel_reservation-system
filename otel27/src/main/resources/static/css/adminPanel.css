@@ -1,0 +1,123 @@
+/* Genel Ayarlar */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #e3eafc, #f7f7fc);
+    color: #333;
+}
+
+/* Admin Panel Konteyneri */
+.admin-panel-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sol Menü (Sidebar) */
+.sidebar {
+    width: 250px;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px 0 0 8px;
+}
+
+.sidebar h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.sidebar a:hover {
+    color: #ffd700;
+}
+
+/* Ana İçerik Alanı */
+.main-content {
+    flex: 1;
+    padding: 40px;
+}
+
+/* Admin Başlık */
+h1 {
+    text-align: center;
+    color: #6a11cb;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Kartlar */
+.card {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.card h3 {
+    font-size: 1.8em;
+    color: #6a11cb;
+    margin-bottom: 15px;
+}
+
+.card-body p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+/* Butonlar */
+button {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    transform: translateY(-3px);
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .admin-panel-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    button {
+        font-size: 16px;
+    }
+}
