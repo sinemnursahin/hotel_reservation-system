@@ -121,3 +121,27 @@ button:hover {
         font-size: 16px;
     }
 }
+* Odaları Yönet Butonuna Özel Stil */
+button.manage-rooms {
+    padding: 14px 30px;
+    font-size: 1.2em; /* Yazı boyutunu biraz büyüttük */
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Mevcut gradient */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Butona hafif gölge ekledik */
+    text-align: center;
+}
+
+button.manage-rooms:hover {
+    background: linear-gradient(to right, #2575fc, #6a11cb); /* Hover durumu */
+    transform: translateY(-3px); /* Buton yukarı kayar */
+}
+
+button.manage-rooms:focus {
+    outline: none; /* Focus durumunda outline'ı kaldır */
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Focus durumunda mavi ışıltı ekledik */
+}

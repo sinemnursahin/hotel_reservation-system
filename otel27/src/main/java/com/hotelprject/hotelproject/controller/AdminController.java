@@ -14,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,8 +89,7 @@ public class AdminController {
                             .roomNumber(r.getRoom().getId())
                             .checkInDate(r.getReservationDate())
                             .checkOutDate(r.getEndDate())
-                            .totalPrice(r.getRoom().getPrice() *
-                                    ChronoUnit.DAYS.between(r.getReservationDate(), r.getEndDate()))
+                            .totalPrice(r.getRoom().getPrice())
                             .status(r.getStatus())
                             .build())
                     .toList();
@@ -105,70 +102,62 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/admin/edit-reservation/{id}")
-    public String showEditReservationForm(@PathVariable("id") Long reservationId,
-                                          Model model,
-                                          HttpSession session) {
+    @GetMapping("/admin/manage-rooms")
+    public String manageRooms(Model model, HttpSession session) {
         String adminEmail = (String) session.getAttribute("loggedInAdmin");
         if (adminEmail == null) {
             return "redirect:/admin/login";
         }
 
-        Optional<Reservation> reservation = reservationService.findById(reservationId);
-        if (reservation.isEmpty()) {
-            return "redirect:/admin/manage-reservations";
-        }
-
-        List<Room> allRooms = roomService.getAllRooms();
-        model.addAttribute("reservation", reservation.get());
-        model.addAttribute("rooms", allRooms);
-        return "admin/edit-reservation";
+        List<Room> rooms = roomService.getAllRooms();
+        model.addAttribute("rooms", rooms);
+        return "manage-rooms";
     }
 
-    @PostMapping("/admin/update-reservation/{id}")
-    public String updateReservation(@PathVariable("id") Long reservationId,
-                                    @RequestParam("roomId") Long roomId,
-                                    @RequestParam("reservationDate") String reservationDate,
-                                    @RequestParam("endDate") String endDate,
-                                    HttpSession session) {
+    @GetMapping("/admin/add-room")
+    public String showAddRoomForm(HttpSession session) {
+        String adminEmail = (String) session.getAttribute("loggedInAdmin");
+        if (adminEmail == null) {
+            return "redirect:/admin/login";
+        }
+        return "add-room";
+    }
+
+    @PostMapping("/admin/add-room")
+    public String addRoom(@RequestParam String name,
+                          @RequestParam Double price,
+                          @RequestParam Integer size,
+                          HttpSession session) {
         String adminEmail = (String) session.getAttribute("loggedInAdmin");
         if (adminEmail == null) {
             return "redirect:/admin/login";
         }
 
         try {
-            Optional<Reservation> reservationOpt = reservationService.findById(reservationId);
-            if (reservationOpt.isEmpty()) {
-                return "redirect:/admin/manage-reservations";
-            }
-
-            reservationService.cancelReservation(reservationId);
-
-            LocalDate startDate = LocalDate.parse(reservationDate);
-            LocalDate end = LocalDate.parse(endDate);
-
-            Reservation oldReservation = reservationOpt.get();
-            reservationService.makeReservation(roomId, startDate, end, oldReservation.getUserInfo());
-
-            return "redirect:/admin/manage-reservations";
+            Room room = new Room();
+            room.setName(name);
+            room.setPrice(price);
+            room.setSize(size);
+            room.setAvailable(true);
+            roomService.saveRoom(room);
+            return "redirect:/admin/manage-rooms?success=true";
         } catch (Exception e) {
-            return "redirect:/admin/manage-reservations?error=true";
+            return "redirect:/admin/manage-rooms?error=true";
         }
     }
 
-    @PostMapping("/admin/delete-reservation/{id}")
-    public String deleteReservation(@PathVariable("id") Long reservationId,
-                                    HttpSession session) {
+    @PostMapping("/admin/delete-room/{id}")
+    public String deleteRoom(@PathVariable("id") Long roomId, HttpSession session) {
         String adminEmail = (String) session.getAttribute("loggedInAdmin");
         if (adminEmail == null) {
             return "redirect:/admin/login";
         }
 
         try {
-            reservationService.cancelReservation(reservationId);
-            return "redirect:/admin/manage-reservations?success=true";
+            roomService.deleteRoom(roomId);
+            return "redirect:/admin/manage-rooms?success=true";
         } catch (Exception e) {
-            return "redirect:/admin/manage-reservations?error=true";
+            return "redirect:/admin/manage-rooms?error=true";
         }
     }
 }
