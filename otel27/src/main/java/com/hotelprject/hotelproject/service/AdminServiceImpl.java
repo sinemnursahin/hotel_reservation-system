@@ -14,6 +14,11 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
 
     @Override
+    public Optional<Admin> findByEmail(String email) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<Admin> findByEmailAndPassword(String email, String password) {
         return adminRepository.findByEmailAndPassword(email, password);
     }

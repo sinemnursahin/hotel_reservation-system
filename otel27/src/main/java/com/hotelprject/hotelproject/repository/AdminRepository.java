@@ -5,4 +5,6 @@ import java.util.Optional;
 public interface AdminRepository extends JpaRepository<Admin, Long> {
     // Admini email ve şifre ile bulma
     Optional<Admin> findByEmailAndPassword(String email, String password);
+    Optional<Admin> findByEmail(String email);
+
 }

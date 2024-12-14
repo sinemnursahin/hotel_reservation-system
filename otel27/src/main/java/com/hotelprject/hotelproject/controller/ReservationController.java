@@ -1,4 +1,5 @@
 package com.hotelprject.hotelproject.controller;
+
 import com.hotelprject.hotelproject.model.Reservation;
 import com.hotelprject.hotelproject.model.Room;
 import com.hotelprject.hotelproject.model.RoomProperty;
@@ -13,46 +14,80 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+
 @Controller
 @RequiredArgsConstructor
 public class ReservationController {
-    private  RoomService roomService;
-    private  ReservationService reservationService;
+    private final RoomService roomService;
+    private final ReservationService reservationService;
+
     @GetMapping("/reserve")
     public String showReservationPage(@RequestParam("roomId") Long roomId, Model model) {
-        // Oda bilgisini RoomService üzerinden alıyoruz.
-        Room room = roomService.getRoomById(roomId);
-        // Oda bulunamazsa hata sayfası gösterilebilir
-        if (room == null) {
-            return "error";  // error.html sayfası
+        try {
+            Room room = roomService.getRoomById(roomId);
+            if (room == null) {
+                model.addAttribute("error", "Oda bulunamadı!");
+                return "error";
+            }
+
+            model.addAttribute("room", room);
+            model.addAttribute("properties", room.getRoomProperties().stream()
+                    .map(RoomProperty::getProperty)
+                    .toList());
+            return "reserve";
+        } catch (Exception e) {
+            model.addAttribute("error", "Rezervasyon sayfası yüklenirken hata: " + e.getMessage());
+            return "error";
         }
-        // Oda bilgisini model ile şablona gönderiyoruz
-        model.addAttribute("room", room);
-        model.addAttribute("properties", room.getRoomProperties().stream().map(RoomProperty::getProperty).toList());
-        return "reserve";  // reserve.html şablonunu döndür
     }
+
     @PostMapping("/reserve")
     public String reserveRoom(@RequestParam("roomId") Long roomId,
                               @RequestParam("reservationDate") String reservationDate,
                               @RequestParam("endDate") String endDate,
                               @RequestParam("numOfPeople") int numOfPeople,
-                              HttpSession httpSession,
+                              HttpSession session,
                               Model model) {
-        Room room = roomService.getRoomById(roomId);
-        var user = (String) httpSession.getAttribute("loggedInUser");
-        Double totalPrice = ChronoUnit.DAYS.between(LocalDate.parse(reservationDate), LocalDate.parse(endDate)) * room.getPrice();
-        model.addAttribute("room", room);
-        model.addAttribute("reservationDate", reservationDate);
-        model.addAttribute("endDate", endDate);
-        model.addAttribute("numOfPeople", numOfPeople);
-        model.addAttribute("message", "Your reservation has been successfully made.");
-        model.addAttribute("room", room);
-        model.addAttribute("reservationDate", LocalDate.parse(reservationDate));
-        model.addAttribute("endDate", LocalDate.parse(endDate));
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("name", user);
-        return "payment";  // ödeme sayfasına yönlendirme
+        try {
+            String username = (String) session.getAttribute("loggedInUser");
+            if (username == null) {
+                return "redirect:/login";
+            }
+
+            Room room = roomService.getRoomById(roomId);
+            if (room == null) {
+                model.addAttribute("error", "Oda bulunamadı!");
+                return "error";
+            }
+
+            LocalDate startDate = LocalDate.parse(reservationDate);
+            LocalDate endDate2 = LocalDate.parse(endDate);
+            Double totalPrice = room.getPrice() * ChronoUnit.DAYS.between(startDate, endDate2);
+
+            // Rezervasyonu oluştur
+            Reservation reservation = reservationService.makeReservation(
+                    roomId,
+                    startDate,
+                    endDate2,
+                    username
+            );
+
+            // Ödeme sayfası için gerekli bilgileri ekle
+            model.addAttribute("reservation", reservation);
+            model.addAttribute("room", room);
+            model.addAttribute("checkInDate", startDate);
+            model.addAttribute("checkOutDate", endDate2);
+            model.addAttribute("numOfPeople", numOfPeople);
+            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("customerName", username);
+
+            return "payment";
+        } catch (Exception e) {
+            model.addAttribute("error", "Rezervasyon oluşturulurken hata: " + e.getMessage());
+            return "error";
+        }
     }
+
     @GetMapping("/cancel-reservation")
     public String showCancelReservationPage(Model model) {
         return "cancel-reservation";
@@ -76,6 +111,4 @@ public class ReservationController {
             return "cancel-reservation";
         }
     }
-
-
 }

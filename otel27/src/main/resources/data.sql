@@ -96,4 +96,5 @@ INSERT INTO room_room_properties(room_id, room_properties_id) VALUES
     (7, 30),  (7, 31), (7, 32), (7, 33);
 INSERT INTO hotel_user (name, email, password, user_role) VALUES
                                                    ('nisasilaaltun', 'nisasilaaltun@test.com', '1234', 'CLIENT'),
+                                                    ('sinemnur', 'sinem@gmail.com', '123', 'CLIENT'),
                                                    ('test', 'test@test.com', '1234', 'ADMIN');
