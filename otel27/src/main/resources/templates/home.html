@@ -79,7 +79,7 @@
 
         // Çarkı döndür
         wheel.style.transition = 'transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
-        wheel.style.transform = `rotate(${randomDegrees}deg)`;
+        wheel.style.transform = rotate(${randomDegrees}deg);
 
         // Dönüş bittiğinde
         setTimeout(() => {
@@ -87,7 +87,7 @@
             const sectionIndex = Math.floor((360 - (actualRotation % 360)) / degreesPerSection);
             const discount = document.querySelectorAll('.wheel-section')[sectionIndex].getAttribute('data-discount');
 
-            result.innerHTML = `Tebrikler! %${10-discount} indirim kazandınız!`;
+            result.innerHTML = Tebrikler! %10 indirim kazandınız!;
             spinButton.disabled = false;
 
             // Backend'e kazanılan indirimi gönder
@@ -228,7 +228,7 @@
         if (nameInput && commentInput) {
             const newComment = document.createElement('div');
             newComment.classList.add('comment-item');
-            newComment.innerHTML = `<p><strong>${nameInput}</strong>: ${commentInput}</p>`;
+            newComment.innerHTML = <p><strong>${nameInput}</strong>: ${commentInput}</p>;
             commentsList.appendChild(newComment);
             document.getElementById('nameInput').value = '';
             document.getElementById('commentInput').value = '';

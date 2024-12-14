@@ -23,6 +23,12 @@
                     <p><strong>Çıkış Tarihi:</strong> <span th:text="${#temporals.format(checkOutDate, 'dd-MM-yyyy')}"></span></p>
                     <p><strong>Kişi Sayısı:</strong> <span th:text="${numOfPeople}"></span></p>
                     <p><strong>Toplam Tutar:</strong> <span th:text="${#numbers.formatDecimal(totalPrice, 0, 'COMMA', 2, 'POINT')}"></span> TL</p>
+                    <p><strong>İndirim (%10):</strong>
+                        <span th:text="${#numbers.formatDecimal(totalPrice * 0.1, 0, 'COMMA', 2, 'POINT')}"></span> TL
+                    </p>
+                    <p><strong>İndirimli Toplam Tutar:</strong>
+                        <span th:text="${#numbers.formatDecimal(totalPrice * 0.9, 0, 'COMMA', 2, 'POINT')}"></span> TL
+                    </p>
                 </div>
             </div>
         </div>
@@ -38,6 +44,7 @@
                         <input type="hidden" name="reservationId" th:value="${reservation.id}" />
                         <input type="hidden" name="reservationDate" th:value="${checkInDate}" />
                         <input type="hidden" name="endDate" th:value="${checkOutDate}" />
+                        <input type="hidden" name="discountedPrice" th:value="${totalPrice * 0.9}" />
 
                         <div class="mb-3">
                             <label for="cardHolderName" class="form-label">Kart Sahibi Adı:</label>
