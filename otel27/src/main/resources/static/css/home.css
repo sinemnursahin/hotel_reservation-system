@@ -127,17 +127,38 @@ nav {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    border-radius: 10px;
+    transition: transform 0.3s ease;
 }
 
+/* Büyütülen Görsel için Stil */
+.gallery-item.enlarged {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2); /* Görselin büyütülmesi */
+    z-index: 1000;
+}
+
+.gallery-item.enlarged::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: -1;
+}
+
+/* Hover Efekti */
 .gallery-item:hover {
     transform: scale(1.05);
 }
@@ -147,58 +168,117 @@ nav {
     filter: brightness(0.8);
 }
 
+
 /* Yorum Bölümü */
 #comments-section {
-    padding: 60px 20px;
-    background: linear-gradient(135deg, #d9c7f7, #b28cf7); /* Açık mor tonları */
-    margin: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #d9c7f7, #b28cf7);
+    margin: 20px auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    box-sizing: border-box;
+    display: block;
 }
 
 #comments-section h2 {
-    font-size: 28px;
-    color: #6a5acd;
-    margin-bottom: 15px;
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
 }
 
 .comment-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.comment-form input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d3a9f7;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    background: white;
+    box-sizing: border-box;
 }
 
 .comment-form textarea {
     width: 100%;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    resize: none;
-    transition: border-color 0.3s ease;
+    padding: 8px 12px;
+    border: 1px solid #d3a9f7;
+    border-radius: 8px;
+    font-size: 14px;
+    min-height: 80px;
+    margin-bottom: 12px;
+    resize: vertical;
+    background: white;
+    box-sizing: border-box;
 }
 
+.comment-form input[type="text"]:focus,
 .comment-form textarea:focus {
+    outline: none;
     border-color: #6a5acd;
 }
 
 .comment-form button {
     background-color: #6a5acd;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 20px;
     border: none;
     border-radius: 20px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
 }
 
 .comment-form button:hover {
-    background-color: #ffcf9c;
-    color: #6a5acd;
+    background-color: #b28cf7;
 }
+
+.comments-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+
+.comment-item {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: transform 0.2s ease;
+    box-sizing: border-box;
+}
+
+.comment-item:hover {
+    transform: translateX(5px);
+}
+
+.comment-item strong {
+    color: #6a5acd;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.comment-item p {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+}
+
 /* Otel Hakkında Bölümü */
 #hotel-info {
     text-align: center;
@@ -238,24 +318,35 @@ nav {
 }
 
 #hotel-info ul {
-    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    list-style: none;
     padding: 0;
+    margin: 30px 0;
 }
 
-#hotel-info ul li {
-    background-color: #f2f2f2;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, color 0.3s ease; /* Geçiş efekti */
+#hotel-info li {
+    width: 150px;
+    height: 150px;
+    background-color: #d3a9f7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    font-weight: bold;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#hotel-info ul li:hover {
-    background-color: #f3e5f5; /* Açık mor ton */
-    color: #9c4dcc; /* Açık mor ton */
+#hotel-info li:hover {
+    transform: scale(1.05);
+    background-color: #b28cf7;
 }
-
 
 /* İletişim Bilgileri */
 #contact-info {
@@ -284,6 +375,31 @@ nav {
     margin-bottom: 5px;
 }
 
+/* SSS Button Styling */
+.sss-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #b28cf7, #6a5acd);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(178, 140, 247, 0.3);
+    border: 2px solid transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sss-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(178, 140, 247, 0.5);
+    background: white;
+    color: #6a5acd;
+    border: 2px solid #6a5acd;
+}
+
 /* Footer */
 footer {
     background-color: #6a5acd;
@@ -294,27 +410,4 @@ footer {
     bottom: 0;
     width: 100%;
     margin-top: 40px;
-}
-
-.success-message {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    padding: 15px;
-    margin: 20px auto;
-    border-radius: 5px;
-    max-width: 800px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
