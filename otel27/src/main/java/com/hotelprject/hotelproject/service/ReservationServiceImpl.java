@@ -23,17 +23,20 @@ public class ReservationServiceImpl implements ReservationService {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new RuntimeException("Room not found with id: " + roomId));
 
-        // Odanın müsaitlik durumunu güncelle
-        room.setAvailable(false);
-        roomRepository.save(room);
+        // Seçilen tarihler için rezervasyon kontrolü
+        List<Reservation> existingReservations = reservationRepository.findByRoomAndDateRange(room, reservationDate, endDate);
+        if (!existingReservations.isEmpty()) {
+            throw new RuntimeException("Bu tarihler için oda zaten rezerve edilmiş!");
+        }
 
         // Yeni rezervasyon oluştur
-        Reservation reservation = new Reservation();
-        reservation.setRoom(room);
-        reservation.setReservationDate(reservationDate);
-        reservation.setEndDate(endDate);
-        reservation.setUserInfo(user);
-        reservation.setStatus("ONAYLANDI");
+        Reservation reservation = Reservation.builder()
+                .room(room)
+                .reservationDate(reservationDate)
+                .endDate(endDate)
+                .userInfo(user)
+                .status("ONAYLANDI")
+                .build();
 
         return reservationRepository.save(reservation);
     }
@@ -62,21 +65,19 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public void cancelReservation(Long reservationId, Long roomId) {
+
+    }
+
+    @Override
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Rezervasyon bulunamadı"));
-
         cancelReservationProcess(reservation);
     }
 
     // Yardımcı metod - rezervasyon iptal işlemleri
     private void cancelReservationProcess(Reservation reservation) {
-        // Odayı tekrar müsait yap
-        Room room = reservation.getRoom();
-        room.setAvailable(true);
-        roomRepository.save(room);
-
-        // Rezervasyon durumunu güncelle
         reservation.setStatus("İPTAL EDİLDİ");
         reservationRepository.save(reservation);
     }

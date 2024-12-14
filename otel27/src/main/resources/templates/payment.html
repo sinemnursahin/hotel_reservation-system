@@ -40,12 +40,6 @@
                 </div>
                 <div class="card-body">
                     <form th:action="@{/reserve/process-payment}" method="post" class="needs-validation" novalidate>
-                        <input type="hidden" name="roomId" th:value="${room.id}" />
-                        <input type="hidden" name="reservationId" th:value="${reservation.id}" />
-                        <input type="hidden" name="reservationDate" th:value="${checkInDate}" />
-                        <input type="hidden" name="endDate" th:value="${checkOutDate}" />
-                        <input type="hidden" name="discountedPrice" th:value="${totalPrice * 0.9}" />
-
                         <div class="mb-3">
                             <label for="cardHolderName" class="form-label">Kart Sahibi Adı:</label>
                             <input type="text" class="form-control" name="cardHolderName" id="cardHolderName"
@@ -95,17 +89,9 @@
                         event.stopPropagation()
                     }
                     form.classList.add('was-validated')
-                }, false)
+                })
             })
     })()
-
-    // Kredi kartı numarası formatlaması
-    document.getElementById('cardNumber').addEventListener('input', function (e) {
-        var target = e.target, position = target.selectionEnd, length = target.value.length;
-        target.value = target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ').trim();
-        target.selectionEnd = position += ((target.value.charAt(position - 1) === ' '
-            && target.value.charAt(length - 1) === ' ' && length !== position) ? 1 : 0);
-    });
 </script>
 </body>
 </html>

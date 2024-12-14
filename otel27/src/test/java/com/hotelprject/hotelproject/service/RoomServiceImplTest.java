@@ -1,6 +1,5 @@
 package com.hotelprject.hotelproject.service;
 
-import com.hotelprject.hotelproject.model.Room;
 import com.hotelprject.hotelproject.repository.ReservationRepository;
 import com.hotelprject.hotelproject.repository.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;

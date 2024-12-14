@@ -1,7 +1,6 @@
 package com.hotelprject.hotelproject.controller;
 
 import com.hotelprject.hotelproject.model.HotelUser;
-import com.hotelprject.hotelproject.model.Reservation;
 import com.hotelprject.hotelproject.model.Room;
 import com.hotelprject.hotelproject.model.dto.ReservationDto;
 import com.hotelprject.hotelproject.service.AdminService;

@@ -9,7 +9,8 @@ import java.util.Optional;
 public interface ReservationService {
     Reservation makeReservation(Long roomId, LocalDate reservationDate, LocalDate endDate, String user);
     List<Reservation> findAllReservations();
-    Optional<Reservation> findById(Long reservationId); // Bu satırı ekleyin
-    void cancelReservation(Long reservationId, String username);
+    Optional<Reservation> findById(Long reservationId);
     void cancelReservation(Long reservationId);
+    void cancelReservation(Long reservationId, String username);
+    void cancelReservation(Long reservationId, Long roomId);
 }
