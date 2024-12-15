@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/sss.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/wheel.css}" />
-
 </head>
 <body>
 
@@ -21,18 +20,18 @@
             <button id="wheelButton" class="wheel-button" onclick="showWheelModal()">🎡 Çarkı Çevir</button>
         </div>
         <div class="user-actions">
-            <div class="user-actions">
             <span th:if="${session.loggedInUser != null}">
                 Hoşgeldin, <b th:text="${session.loggedInUser}"></b>!
                 <a th:href="@{/logout}" class="logout-button">Çıkış Yap</a>
             </span>
-                <span th:if="${session.loggedInUser == null}">
+            <span th:if="${session.loggedInUser == null}">
                 <a th:href="@{/login}" class="auth-button">Login</a>
                 <a th:href="@{/register}" class="auth-button">Kayıt Ol</a>
             </span>
-            </div>
         </div>
+    </div>
 </nav>
+
 <!-- Çark Modal -->
 <div id="wheelModal" class="modal">
     <div class="modal-content">
@@ -46,8 +45,8 @@
                 <div class="wheel-section" data-discount="20">%20</div>
                 <div class="wheel-section" data-discount="25">%25</div>
                 <div class="wheel-section" data-discount="30">%30</div>
-                <div class="wheel-section" data-discount="35">%35</div> <!-- Eklenmiş dilim -->
-                <div class="wheel-section" data-discount="40">%40</div> <!-- Eklenmiş dilim -->
+                <div class="wheel-section" data-discount="35">%35</div>
+                <div class="wheel-section" data-discount="40">%40</div>
             </div>
         </div>
         <button id="spinButton" onclick="spinWheel()">Çarkı Çevir</button>
@@ -55,67 +54,12 @@
     </div>
 </div>
 
-<script>
-    function showWheelModal() {
-        document.getElementById('wheelModal').style.display = 'block';
-    }
-
-    function closeWheelModal() {
-        document.getElementById('wheelModal').style.display = 'none';
-    }
-
-    function spinWheel() {
-        const wheel = document.getElementById('wheel');
-        const result = document.getElementById('result');
-        const spinButton = document.getElementById('spinButton');
-
-        // Butonu devre dışı bırak
-        spinButton.disabled = true;
-
-        // Rastgele derece oluştur (6 dilim için 360/6 = 60 derece aralıklarla)
-        const sections = 6;
-        const degreesPerSection = 360 / sections;
-        const randomDegrees = Math.floor(Math.random() * 360) + 1440; // En az 4 tam tur
-
-        // Çarkı döndür
-        wheel.style.transition = 'transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
-        wheel.style.transform = rotate(${randomDegrees}deg);
-
-        // Dönüş bittiğinde
-        setTimeout(() => {
-            const actualRotation = randomDegrees % 360;
-            const sectionIndex = Math.floor((360 - (actualRotation % 360)) / degreesPerSection);
-            const discount = document.querySelectorAll('.wheel-section')[sectionIndex].getAttribute('data-discount');
-
-            result.innerHTML = Tebrikler! %10 indirim kazandınız!;
-            spinButton.disabled = false;
-
-            // Backend'e kazanılan indirimi gönder
-            fetch('/api/discount/spin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'user-id': 'test-user' // Gerçek uygulamada kullanıcı ID'si dinamik olmalı
-                },
-                body: JSON.stringify({ discountPercentage: discount })
-            });
-        }, 5000);
-    }
-
-    // Modal dışına tıklandığında kapatma
-    window.onclick = function(event) {
-        const modal = document.getElementById('wheelModal');
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
+<!-- Hoşgeldiniz Bölümü -->
 <section class="welcome-section" th:style="'background-image: url(' + @{/homeimages/otel.jpg} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
     <h1>Renkli Rüyalar Oteli'ne Hoşgeldiniz</h1>
     <p>Konforun ve lüksün buluşma noktası.</p>
     <a href="/rooms" class="cta-button">Odaları Keşfet</a>
 </section>
-
 
 <!-- Otel Resimleri Galerisi -->
 <section id="hotel-gallery">
@@ -163,7 +107,7 @@
 </section>
 
 <!-- SSS Bölümü -->
-<<section id="contact-info">
+<section id="contact-info">
     <div class="contact-container">
         <div class="contact-details">
             <h2>İletişim Bilgileri</h2>
@@ -179,84 +123,14 @@
     </div>
 </section>
 
-
-
-
-<script>
-    // SSS Fonksiyonları
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('showFaqButton').addEventListener('click', function() {
-            const faqContent = document.getElementById('faqContent');
-            if (faqContent.style.display === 'none') {
-                faqContent.style.display = 'block';
-                this.textContent = 'SSS\'leri Gizle';
-            } else {
-                faqContent.style.display = 'none';
-                this.textContent = 'SSS\'leri Görüntüle';
-            }
-        });
-
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const wasActive = faqItem.classList.contains('active');
-
-                // Tüm diğer SSS öğelerini kapat
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-
-                // Tıklanan öğeyi aç/kapat
-                if (!wasActive) {
-                    faqItem.classList.add('active');
-                }
-            });
-        });
-    });
-</script>
 <!-- Footer -->
 <footer>
     <p> 2024 Renkli Rüyalar Oteli - Tüm hakları saklıdır.</p>
 </footer>
 
-<script>
-    function submitComment() {
-        const commentsList = document.getElementById('comments-list');
-        const nameInput = document.getElementById('nameInput').value;
-        const commentInput = document.getElementById('commentInput').value;
-
-        if (nameInput && commentInput) {
-            const newComment = document.createElement('div');
-            newComment.classList.add('comment-item');
-            newComment.innerHTML = <p><strong>${nameInput}</strong>: ${commentInput}</p>;
-            commentsList.appendChild(newComment);
-            document.getElementById('nameInput').value = '';
-            document.getElementById('commentInput').value = '';
-        } else {
-            alert('Lütfen adınızı ve yorumunuzu girin.');
-        }
-    }
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const galleryItems = document.querySelectorAll('.gallery-item');
-
-        galleryItems.forEach(item => {
-            item.addEventListener('click', function() {
-                this.classList.toggle('enlarged');
-            });
-        });
-
-        // Close enlarged image when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.gallery-item')) {
-                document.querySelectorAll('.gallery-item.enlarged').forEach(item => {
-                    item.classList.remove('enlarged');
-                });
-            }
-        });
-    });
-</script>
+<!-- Harici JavaScript Dosyaları -->
+<script src="/js/wheel.js"></script>
+<script src="/js/comments.js"></script>
+<script src="/js/gallery.js"></script>
 </body>
 </html>

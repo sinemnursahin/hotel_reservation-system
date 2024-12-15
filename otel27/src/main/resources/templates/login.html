@@ -9,30 +9,21 @@
 <body>
 <div class="login-container">
     <h2>Giriş Yap</h2>
-
-    <div class="error-message" th:if="${loginError}">
-        <p th:text="${loginError}"></p>
-    </div>
-
     <form action="#" th:action="@{/login}" method="post">
         <div class="form-group">
             <label for="email">E-posta:</label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="email" placeholder="E-posta adresinizi giriniz" required />
         </div>
         <div class="form-group">
             <label for="password">Şifre:</label>
-            <input type="password" id="password" name="password" required />
+            <input type="password" id="password" name="password" placeholder="Şifrenizi giriniz" required />
         </div>
         <div class="form-group">
             <button type="submit" class="btn">Giriş Yap</button>
         </div>
     </form>
-
-    <div class="register-link">
+    <div class="extra-links">
         <p>Üye değil misiniz? <a href="/register">Üye ol</a></p>
-    </div>
-
-    <div class="admin-login-link">
         <p>Otel yöneticisi misiniz? <a href="/admin/login">Yönetici Girişi</a></p>
     </div>
 </div>

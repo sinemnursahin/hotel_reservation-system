@@ -3,7 +3,7 @@ body {
     font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #e3eafc, #f7f7fc);
+    background: linear-gradient(to bottom, #f1f6fb, #dce4f9); /* Açık mor ve mavi tonları */
     color: #333;
 }
 
@@ -13,9 +13,22 @@ body {
     max-width: 450px;
     margin: 50px auto;
     padding: 40px;
-    background: #ffffff;
+    background: #ffffff; /* Beyaz, ancak hafif gölgelerle zenginleştirilmiş */
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeInContainer 1s ease-out;
+}
+
+/* Konteynerin FadeIn Animasyonu */
+@keyframes fadeInContainer {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Başlık */
@@ -27,6 +40,8 @@ h2 {
     background: linear-gradient(to right, #6a11cb, #2575fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: none; /* Fosforlu etkiyi kaldırdık */
+    animation: none; /* Animasyon kaldırıldı */
 }
 
 /* Form Alanı */
@@ -54,10 +69,12 @@ form {
     border-radius: 8px;
     outline: none;
     transition: border-color 0.3s ease-in-out;
+    background: #f6f7fc; /* Açık mor tonlarında soft bir arka plan */
 }
 
 .input-group input:focus {
     border-color: #6a11cb;
+    box-shadow: 0 0 5px rgba(106, 17, 203, 0.4);
 }
 
 /* Hata Mesajı */
@@ -73,7 +90,7 @@ form {
     animation: fadeIn 1s ease-out;
 }
 
-/* Animasyonlar */
+/* Hata Mesajı Animasyonu */
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -94,13 +111,14 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     margin-top: 20px;
 }
 
 button:hover {
     background: linear-gradient(to right, #2575fc, #6a11cb);
     transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Responsive Tasarım */
